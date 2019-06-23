@@ -11,6 +11,7 @@ const { errorHandler } = require('./routes/errorHandler');
 const app = express();
 app.set('port', port);
 
+// TODO: configure cors security
 app.use(cors());
 app.use(helmet());
 app.use(logger(logEnv));

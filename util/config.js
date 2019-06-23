@@ -1,7 +1,8 @@
 // Retrieves all environment variables
 if (process.env.NODE_ENV !== 'production') {
+    const envFile = require('path').resolve(process.cwd(), 'api.env');
     const dotenv = require('dotenv');
-    dotenv.config();
+    dotenv.config({path: envFile});
 }
 module.exports = {
     logEnv: process.env.LOG_FORMAT, // For logger
