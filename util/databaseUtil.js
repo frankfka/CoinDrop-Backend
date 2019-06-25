@@ -27,7 +27,9 @@ function decryptId(encryptedId) {
     } catch (err) {
         // Decryption failed - Improper input
         console.log(`ID decryption failed: ${err.message}`);
-        throw new Error('Encrypted ID not valid. Could not be decrypted')
+        let idValidationError = new Error('Encrypted ID not valid. Could not be decrypted')
+        idValidationError.name = 'ValidationError';
+        throw idValidationError
     }
 }
 
