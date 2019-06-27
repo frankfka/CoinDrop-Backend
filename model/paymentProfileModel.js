@@ -17,5 +17,5 @@ const paymentProfileSchema = new Schema({
       paymentMethods: { type: [paymentMethodSchema], required: true, validate: [(array) => array.length > 0, 'Payment Methods is Empty'], } // Supported payment methods
    }, { collection: 'paymentProfiles', autoIndex: false });
 
-const PaymentProfile = mongoose.model('PaymentProfile', paymentProfileSchema);
+const PaymentProfile = mongoose.model('PaymentProfilePage', paymentProfileSchema);
 module.exports = PaymentProfile;

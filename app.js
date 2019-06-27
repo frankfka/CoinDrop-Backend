@@ -11,18 +11,17 @@ const { errorHandler } = require('./routes/errorHandler');
 const app = express();
 app.set('port', port);
 
-// TODO: configure cors security
-app.use(cors());
+app.use(cors()); // TODO: configure cors security
 app.use(helmet());
 app.use(logger(logEnv));
 app.use(bodyParser.urlencoded({extended: false}));
-app.use(bodyParser.json());
+app.use(bodyParser.json({limit: 5000})); // Limit request size to 5kb
 
 // Test Endpoint
 const homeRouter = express.Router();
 app.use('/api', homeRouter);
 homeRouter.get('/', (req, res) => {
-    res.send("Connection Established")
+    res.send("Connection Established!")
 });
 
 // Payment Profile Endpoint

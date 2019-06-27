@@ -1,12 +1,10 @@
 FROM node:10-alpine
 
-WORKDIR /usr/src/app
+WORKDIR /usr/src/api
 
 COPY package*.json ./
 RUN npm install
 
 COPY . .
 
-EXPOSE 4000
-
-CMD [ "npm", "start" ]
+CMD [ "npm", "run", "start_dev" ]
