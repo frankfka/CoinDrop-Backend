@@ -28,6 +28,10 @@ homeRouter.get('/', (req, res) => {
 const paymentProfileRouter = require('./routes/paymentProfileRouter');
 app.use('/api/profile', paymentProfileRouter);
 
+// Coin Info Endpoint
+const coinInfoRouter = require('./routes/coinInfoRouter');
+app.use('/api/coins', coinInfoRouter);
+
 // Error handling middleware
 app.use(errorHandler.logger);
 app.use(errorHandler.mongoose);

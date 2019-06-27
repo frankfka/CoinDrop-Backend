@@ -6,9 +6,9 @@ const { coinDetailsApiKey } = require('../util/config');
 
 /**
  * Retrieves coin details from CryptoCompare
+ * Expects an array of ticker ID's
  */
 function getCoinDetails(coins) {
-    console.log(`Getting coin details for: ${coins.toString()}`);
     return new Promise(function(resolve, reject) {
         // Call the server
         axios.get(COIN_DETAILS_URL, {
@@ -54,11 +54,11 @@ function formatResponse(responseObj) {
     // TODO: Parse price conversion from response body
     let coinsData = responseObj['Data'];
     return coinsData.map(function(data) {
-        let coininfo = data['CoinInfo'];
+        let coinInfo = data['CoinInfo'];
         return {
-            currencyCode: coininfo['Name'],
-            displayName: coininfo['FullName'],
-            imageUrl: COIN_IMAGE_BASE_URL + coininfo['ImageUrl']
+            currencyCode: coinInfo['Name'],
+            displayName: coinInfo['FullName'],
+            imageUrl: COIN_IMAGE_BASE_URL + coinInfo['ImageUrl']
         }
     })
 }

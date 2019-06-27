@@ -17,7 +17,7 @@ async function newPaymentProfile(req, res, next) {
 async function getPaymentProfile(req, res, next) {
     // TODO: Validate the input: https://www.npmjs.com/package/jsonschema
     // Decrypt the payment profile ID
-    let encryptedProfileId = req.query.profileId;
+    let encryptedProfileId = req.query['profileId'];
     console.log(`Attempting to retrieve profile with encrypted ID: ${encryptedProfileId}`);
     let paymentProfile = await paymentProfileService.get(decryptId(encryptedProfileId));
     res.json(formatProfileForResponse(paymentProfile, encryptedProfileId));
