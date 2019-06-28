@@ -3,7 +3,9 @@ const { databaseUri } = require('../util/config');
 mongoose.Promise = global.Promise;
 
 function connect() {
-    return mongoose.connect(databaseUri);
+    return mongoose.connect(databaseUri, {
+        useNewUrlParser: true
+    });
 }
 
 module.exports = {

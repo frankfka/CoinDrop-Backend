@@ -10,7 +10,7 @@ async function getCoinInfo(req, res, next) {
     let coins = req.query['currencyCodes'].split(','); // Should be an array of strings
     console.log(`Getting coin details for: ${coins.toString()}`);
     let retrievedInfo = await coinInfoService.getCoinDetails(coins);
-    res.json({ coinInfo: retrievedInfo });
+    res.json({ rawCoinInfo: retrievedInfo });
 }
 
 module.exports = coinInfoRouter;

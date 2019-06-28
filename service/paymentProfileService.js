@@ -2,8 +2,6 @@ const PaymentProfile = require('../model/paymentProfileModel');
 const { randomProfileId } = require('../util/databaseUtil');
 const ReadPreference = require('mongodb').ReadPreference;
 
-require('./databaseService').connect();
-
 /**
  * Creates and saves a payment profile with the given input
  */
