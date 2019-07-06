@@ -10,5 +10,6 @@ module.exports = {
     databaseUri: process.env.DATABASE_URI, // URI with database and auth
     encryptionAlgorithm: process.env.ENCRYPTION_ALGORITHM, // Algorithm to be used to encrypt ID's
     encryptionKey: process.env.ENCRYPTION_KEY, // Key used for encryption
-    coinDetailsApiKey: process.env.COIN_DETAILS_API_KEY // Key used to call CryptoCompare
+    coinDetailsApiKey: process.env.COIN_DETAILS_API_KEY, // Key used to call CryptoCompare
+    configVersion: process.env.CONFIG_VERSION // Backend config version
 };

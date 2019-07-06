@@ -1,15 +1,27 @@
-const axios = require('axios');
-
 const COIN_IMAGE_BASE_URL = 'https://www.cryptocompare.com/';
 const COIN_DETAILS_URL = 'https://min-api.cryptocompare.com/data/coin/generalinfo';
-const { coinDetailsApiKey } = require('../util/config');
+
+const axios = require('axios');
+const {coinDetailsApiKey, configVersion} = require('../util/config');
+const {BackendConfig} = require('../model/backendConfigModel');
+const ReadPreference = require('mongodb').ReadPreference;
+
+/**
+ * Retrieves a list of valid currencies
+ */
+async function getSupportedCurrencies() {
+    let config = await BackendConfig.findOne({version: configVersion})
+        .read(ReadPreference.NEAREST)
+        .exec();
+    return config.supportedCurrencies;
+}
 
 /**
  * Retrieves coin details from CryptoCompare
  * Expects an array of ticker ID's
  */
 function getCoinDetails(coins) {
-    return new Promise(function(resolve, reject) {
+    return new Promise(function (resolve, reject) {
         // Call the server
         axios.get(COIN_DETAILS_URL, {
             params: {
@@ -18,18 +30,18 @@ function getCoinDetails(coins) {
                 api_key: coinDetailsApiKey
             },
             responseType: 'stream'
-        }).then(function(res) {
+        }).then(function (res) {
             // Response is a stream - read and attempt to parse it
             let responseBody = '';
             let responseStream = res.data;
-            responseStream.on('data', function(chunk) {
+            responseStream.on('data', function (chunk) {
                 responseBody += chunk;
             });
-            responseStream.on('end', function() {
+            responseStream.on('end', function () {
                 let responseObj;
                 try {
                     responseObj = JSON.parse(responseBody);
-                } catch(err) {
+                } catch (err) {
                     reject(Error('Coin details JSON parsing failed'))
                 }
                 if (responseObj['Message'] && responseObj['Message'] === 'Success') {
@@ -40,7 +52,7 @@ function getCoinDetails(coins) {
                     reject(Error('Coin details API returned an error'))
                 }
             });
-        }).catch(function(err) {
+        }).catch(function (err) {
             console.log(`Network call to coin details failed: ${JSON.stringify(err)}`);
             reject(err)
         })
@@ -53,7 +65,7 @@ function getCoinDetails(coins) {
 function formatResponse(responseObj) {
     // TODO: Parse price conversion from response body
     let coinsData = responseObj['Data'];
-    return coinsData.map(function(data) {
+    return coinsData.map(function (data) {
         let coinInfo = data['CoinInfo'];
         return {
             currencyCode: coinInfo['Name'],
@@ -63,4 +75,4 @@ function formatResponse(responseObj) {
     })
 }
 
-module.exports = { getCoinDetails };
+module.exports = {getCoinDetails, getSupportedCurrencies};
