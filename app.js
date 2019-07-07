@@ -25,7 +25,7 @@ function startServer() {
     const app = express();
     app.set('port', port);
 
-    app.use(cors()); // TODO: configure cors security
+    app.use(cors());
     app.use(helmet());
     app.use(logger(logEnv));
     app.use(bodyParser.urlencoded({extended: false}));
