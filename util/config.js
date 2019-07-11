@@ -4,12 +4,19 @@ if (process.env.NODE_ENV !== 'production') {
     const dotenv = require('dotenv');
     dotenv.config({path: envFile});
 }
+
+// Config
+LOG_FORMAT = process.env.LOG_FORMAT ? process.env.LOG_FORMAT : 'common';
+PORT = 4000;
+CONFIG_VERSION = '1.0.0';
+ENCRYPTION_ALGORITHM = 'aes256';
+
 module.exports = {
-    logEnv: process.env.LOG_FORMAT, // For logger
-    port: process.env.PORT, // Port to serve
-    databaseUri: process.env.DATABASE_URI, // URI with database and auth
-    encryptionAlgorithm: process.env.ENCRYPTION_ALGORITHM, // Algorithm to be used to encrypt ID's
+    logEnv: LOG_FORMAT, // For logger
+    port: PORT, // Port to serve
+    configVersion: CONFIG_VERSION, // Backend config version
+    encryptionAlgorithm: ENCRYPTION_ALGORITHM, // Algorithm to be used to encrypt ID's
     encryptionKey: process.env.ENCRYPTION_KEY, // Key used for encryption
     coinDetailsApiKey: process.env.COIN_DETAILS_API_KEY, // Key used to call CryptoCompare
-    configVersion: process.env.CONFIG_VERSION // Backend config version
+    databaseUri: process.env.DATABASE_URI, // URI with database and auth
 };
