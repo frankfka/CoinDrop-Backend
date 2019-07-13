@@ -12,19 +12,25 @@ require('./service/databaseService').connect()
 
 // Used to start the server
 function startServer() {
-    // Dependencies
+    // Middleware
     const express = require('express');
     const logger = require('morgan');
     const cors = require('cors');
     const bodyParser = require('body-parser');
     const helmet = require('helmet');
+    const rateLimiter = require('express-rate-limit');
 
-    const { logEnv, port } = require('./util/config');
-    const { errorHandler } = require('./routes/errorHandler');
+    const {logEnv, port} = require('./util/config');
+    const {errorHandler} = require('./routes/errorHandler');
 
     const app = express();
     app.set('port', port);
+    app.set('trust proxy', 1); // Used with express-rate-limiter
 
+    app.use(rateLimiter({
+        windowMs: 10 * 60 * 1000, // 10 min
+        max: 100 // Limit 100 req/window/IP
+    }));
     app.use(cors());
     app.use(helmet());
     app.use(logger(logEnv));
