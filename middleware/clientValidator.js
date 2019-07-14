@@ -4,7 +4,7 @@ const crypto = require('crypto');
 const {clientSigningKey, clientAlgorithm} = require("../util/configUtil");
 
 // Helpers & Constants
-const TIMEOUT = 1000 * 60 * 5; // 5 minute timeout in ms
+const TIMEOUT = 1000 * 5; // 5 second timeout in ms
 const SIGNATURE_HEADER_KEY = 'X-Coindrop-Signature';
 const TIMESTAMP_HEADER_KEY = 'X-Coindrop-Timestamp';
 const isEmptyObject = (object) => {
