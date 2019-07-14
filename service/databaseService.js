@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const { databaseUri } = require('../util/config');
+const { databaseUri } = require('../util/configUtil');
 mongoose.Promise = global.Promise;
 
 function connect() {

@@ -1,7 +1,7 @@
 const express = require('express');
 const paymentProfileService = require('../service/paymentProfileService');
 const {GetProfileEndpointModel, NewProfileEndpointModel} = require("../model/endpointModel");
-const {asyncRoute} = require('./errorHandler');
+const {asyncRoute} = require('../middleware/asyncRouteWrapper');
 const {formatProfileForResponse, encryptId, decryptId} = require('../util/databaseUtil');
 const {validateInput} = require('../util/networkUtil');
 const paymentProfileRouter = express.Router();

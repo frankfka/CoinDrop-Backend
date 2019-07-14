@@ -2,7 +2,7 @@ const COIN_IMAGE_BASE_URL = 'https://www.cryptocompare.com/';
 const COIN_DETAILS_URL = 'https://min-api.cryptocompare.com/data/coin/generalinfo';
 
 const axios = require('axios');
-const {coinDetailsApiKey, configVersion} = require('../util/config');
+const {coinDetailsApiKey, configVersion} = require('../util/configUtil');
 const {BackendConfig} = require('../model/backendConfigModel');
 const ReadPreference = require('mongodb').ReadPreference;
 

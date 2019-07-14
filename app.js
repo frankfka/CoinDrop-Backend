@@ -12,6 +12,7 @@ require('./service/databaseService').connect()
 
 // Used to start the server
 function startServer() {
+
     // Middleware
     const express = require('express');
     const logger = require('morgan');
@@ -19,9 +20,10 @@ function startServer() {
     const bodyParser = require('body-parser');
     const helmet = require('helmet');
     const rateLimiter = require('express-rate-limit');
+    const clientValidator = require('./middleware/clientValidator');
 
-    const {logEnv, port} = require('./util/config');
-    const {errorHandler} = require('./routes/errorHandler');
+    const {logEnv, port} = require('./util/configUtil');
+    const {errorHandler} = require('./middleware/errorHandler');
 
     const app = express();
     app.set('port', port);
@@ -46,15 +48,15 @@ function startServer() {
 
     // Payment Profile Endpoint
     const paymentProfileRouter = require('./routes/paymentProfileRouter');
-    app.use('/api/profile', paymentProfileRouter);
+    app.use('/api/profile', clientValidator, paymentProfileRouter);
 
     // Coin Info Endpoint
     const coinInfoRouter = require('./routes/coinInfoRouter');
-    app.use('/api/coins', coinInfoRouter);
+    app.use('/api/coins', clientValidator, coinInfoRouter);
 
     // Error handling middleware
-    app.use(errorHandler.logger);
-    app.use(errorHandler.mongoose);
+    app.use(errorHandler.errorLogger);
+    app.use(errorHandler.input);
     app.use(errorHandler.generic);
     app.listen(port, () => console.log(`Listening on Port ${port}`));
 }

@@ -1,4 +1,4 @@
-const { encryptionAlgorithm, encryptionKey } = require('./config');
+const { profileAlgorithm, profileKey } = require('./configUtil');
 const crypto = require('crypto');
 
 // Creates a random, unencrypted id
@@ -9,7 +9,7 @@ function randomProfileId() {
 // Encrypts an ID using env properties
 function encryptId(plainId) {
     const iv = crypto.randomBytes(16); // Nonce initialization vector
-    let cipher = crypto.createCipheriv(encryptionAlgorithm, Buffer.from(encryptionKey), iv);
+    let cipher = crypto.createCipheriv(profileAlgorithm, Buffer.from(profileKey), iv);
     let encrypted = cipher.update(plainId);
     encrypted = Buffer.concat([encrypted, cipher.final()]);
     return iv.toString('hex') + '$' + encrypted.toString('hex');
@@ -21,7 +21,7 @@ function decryptId(encryptedId) {
         let vectorAndEncryptedText = encryptedId.split('$');
         let iv = Buffer.from(vectorAndEncryptedText.shift(), 'hex'); // Retrieve init vector from the encrypted text
         let encryptedText = Buffer.from(vectorAndEncryptedText.join('$'), 'hex'); // In case there was a $ not associated with IV
-        let decipher = crypto.createDecipheriv(encryptionAlgorithm, Buffer.from(encryptionKey), iv);
+        let decipher = crypto.createDecipheriv(profileAlgorithm, Buffer.from(profileKey), iv);
         let decrypted = decipher.update(encryptedText);
         return Buffer.concat([decrypted, decipher.final()]).toString();
     } catch (err) {

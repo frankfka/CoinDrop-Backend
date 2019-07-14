@@ -2,7 +2,7 @@ const express = require('express');
 const coinInfoService = require('../service/coinInfoService');
 const {GetCoinInfoEndpointModel} = require("../model/endpointModel");
 const {validateInput} = require("../util/networkUtil");
-const {asyncRoute} = require("./errorHandler");
+const {asyncRoute} = require("../middleware/asyncRouteWrapper");
 const coinInfoRouter = express.Router();
 
 coinInfoRouter.get('/', asyncRoute(getCoinInfo));
