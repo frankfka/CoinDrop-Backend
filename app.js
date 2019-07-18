@@ -17,6 +17,16 @@ function startServer() {
     const express = require('express');
     const logger = require('morgan');
     const cors = require('cors');
+    const corsWhitelist = ['https://coindrop.me', 'https://www.coindrop.me'];
+    const corsOptions = {
+        origin: function (origin, callback) {
+            if (corsWhitelist.indexOf(origin) !== -1) {
+                callback(null, true)
+            } else {
+                callback(new Error('Blocked by CORS'))
+            }
+        }
+    };
     const bodyParser = require('body-parser');
     const helmet = require('helmet');
     const rateLimiter = require('express-rate-limit');
@@ -33,7 +43,7 @@ function startServer() {
         windowMs: 10 * 60 * 1000, // 10 min
         max: 100 // Limit 100 req/window/IP
     }));
-    app.use(cors());
+    app.use(cors(corsOptions));
     app.use(helmet());
     app.use(logger(logEnv));
     app.use(bodyParser.urlencoded({extended: false}));
