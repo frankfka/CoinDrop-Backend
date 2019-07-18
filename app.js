@@ -16,7 +16,14 @@ function startServer() {
     // Middleware
     const express = require('express');
     const logger = require('morgan');
-    const cors = require('cors');
+    const bodyParser = require('body-parser');
+    const helmet = require('helmet');
+    const rateLimiter = require('express-rate-limit');
+    const corsModule = require('cors');
+    const {logEnv, port, blockCors, validateClient} = require('./util/configUtil');
+    const {errorHandler} = require('./middleware/errorHandler');
+
+    // Environment based setup
     const corsWhitelist = ['https://coindrop.me', 'https://www.coindrop.me'];
     const corsOptions = {
         origin: function (origin, callback) {
@@ -27,13 +34,8 @@ function startServer() {
             }
         }
     };
-    const bodyParser = require('body-parser');
-    const helmet = require('helmet');
-    const rateLimiter = require('express-rate-limit');
-    const clientValidator = require('./middleware/clientValidator');
-
-    const {logEnv, port} = require('./util/configUtil');
-    const {errorHandler} = require('./middleware/errorHandler');
+    const cors = blockCors ? corsModule(corsOptions) : corsModule();
+    const clientValidator = validateClient ? require('./middleware/clientValidator') : (req, res, next) => {next()};
 
     const app = express();
     app.set('port', port);
@@ -43,7 +45,6 @@ function startServer() {
         windowMs: 10 * 60 * 1000, // 10 min
         max: 100 // Limit 100 req/window/IP
     }));
-    app.use(cors(corsOptions));
     app.use(helmet());
     app.use(logger(logEnv));
     app.use(bodyParser.urlencoded({extended: false}));
@@ -55,6 +56,9 @@ function startServer() {
     homeRouter.get('/', (req, res) => {
         res.send("Connection Established!")
     });
+
+    // Enable CORS outside of health check endpoint
+    app.use(cors);
 
     // Payment Profile Endpoint
     const paymentProfileRouter = require('./routes/paymentProfileRouter');

@@ -1,10 +1,10 @@
 {
   "name": "coindrop-backend",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "private": true,
   "scripts": {
-    "start": "node app.js",
-    "start_dev": "NODE_ENV=development nodemon app.js"
+    "start": "nodemon app.js",
+    "start_nocheck": "NO_CHECK=true nodemon app.js"
   },
   "dependencies": {
     "ajv": "^6.10.1",
