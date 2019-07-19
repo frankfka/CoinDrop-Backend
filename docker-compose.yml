@@ -5,6 +5,7 @@ services:
   api:
     build: .
     restart: always
+    container_name: api
     expose:
       - 4000
     ports:
