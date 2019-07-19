@@ -1,0 +1,11 @@
+# CircleCI Version
+version: 2
+jobs:
+  build:
+    machine: true # Use Linux VM
+    working_directory: ~/api
+    steps:
+      - checkout # Pull from Github
+      - run:
+          name: Build with Docker Compose
+          command: docker-compose up -d
