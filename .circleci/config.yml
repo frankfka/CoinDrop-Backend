@@ -9,8 +9,20 @@ jobs:
 
       - run:
           name: Build with Docker Compose
-          command: |
-            set -x
-            docker-compose up -d
-            docker run --network container:api \
-            appropriate/curl --retry 10 --retry-delay 1 --retry-connrefused http://localhost:4000/api/
+          command: docker-compose up -d
+
+
+      - run:
+          name: Install Dockerize
+          command: wget https://github.com/jwilder/dockerize/releases/download/$DOCKERIZE_VERSION/dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz && sudo tar -C /usr/local/bin -xzvf dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz && rm dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz
+          environment:
+            DOCKERIZE_VERSION: v0.6.1
+
+      - run:
+          name: Wait for API startup
+          command: dockerize -wait http://localhost:4000 -timeout 1m
+#          command: |
+#            set -x
+#            docker-compose up -d
+#            docker run --network container:api \
+#            appropriate/curl --retry 10 --retry-delay 1 --retry-connrefused http://localhost:4000/api/
