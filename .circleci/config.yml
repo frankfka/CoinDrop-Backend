@@ -10,9 +10,12 @@ jobs:
       - run:
           name: Build with Docker Compose
           command: |
+            set -x
             docker-compose up -d
             docker logs -f api
 
+      - run: docker-compose run --rm front yarn install
+      - run: docker-compose run --rm front yarn build
 
       - run:
           name: Install Dockerize
