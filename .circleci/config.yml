@@ -6,6 +6,11 @@ jobs:
     working_directory: ~/api
     steps:
       - checkout # Pull from Github
+
       - run:
           name: Build with Docker Compose
           command: docker-compose up -d
+
+      - run:
+          name: Health Check
+          command: curl --retry 10 --retry-delay 1 --retry-connrefused http://localhost:4000/api
