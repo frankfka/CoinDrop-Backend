@@ -9,7 +9,9 @@ jobs:
 
       - run:
           name: Build with Docker Compose
-          command: docker-compose up -d
+          command: |
+            docker-compose up -d
+            docker logs -f api
 
 
       - run:
