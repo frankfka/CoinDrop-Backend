@@ -3,8 +3,9 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "start": "nodemon app.js",
-    "start_nocheck": "NO_CHECK=true nodemon app.js"
+    "start": "node app.js",
+    "start_dev": "nodemon app.js",
+    "start_dev_nocheck": "NO_CHECK=true nodemon app.js"
   },
   "dependencies": {
     "ajv": "^6.10.1",

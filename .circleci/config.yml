@@ -1,0 +1,15 @@
+# CircleCI Version
+version: 2
+jobs:
+  build:
+    machine: true # Use Linux VM
+    working_directory: ~/api
+    steps:
+      - checkout # Pull from Github
+      - run:
+          name: Build with Docker Compose
+          command: |
+            set -x
+            docker-compose up -d
+            docker run --network container:api \
+            appropriate/curl --retry 10 --retry-delay 1 --retry-connrefused http://localhost:4000/api/
