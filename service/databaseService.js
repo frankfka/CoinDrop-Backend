@@ -8,7 +8,12 @@ function connect() {
     });
 }
 
+function disconnect() {
+    return mongoose.disconnect();
+}
+
 module.exports = {
     connect,
+    disconnect,
     mongoose
 };

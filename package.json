@@ -3,9 +3,11 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "start": "node app.js",
-    "start_dev": "nodemon app.js",
-    "start_dev_nocheck": "NO_CHECK=true nodemon app.js"
+    "start": "node server.js",
+    "start_dev": "nodemon server.js",
+    "start_dev_nocheck": "NO_CHECK=true nodemon server.js",
+    "test": "jest",
+    "test_cov": "jest --collectCoverage=true"
   },
   "dependencies": {
     "ajv": "^6.10.1",
@@ -22,7 +24,12 @@
     "morgan": "~1.9.1"
   },
   "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.7.0",
     "dotenv": "^8.0.0",
-    "nodemon": "^1.19.1"
+    "jest": "^24.8.0",
+    "nodemon": "^1.19.1",
+    "superagent": "^5.1.0",
+    "supertest": "^4.0.2"
   }
 }
