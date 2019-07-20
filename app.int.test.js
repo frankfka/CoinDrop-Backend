@@ -5,9 +5,11 @@ const db = require('./service/databaseService');
 
 // Runs once for the entire test file
 beforeAll(() => {
+    console.debug('Beginning App Integration Test. Initializing DB');
     return db.connect();
 });
 afterAll(() => {
+    console.debug('Ending App Integration Test. Disconnecting DB');
     return db.disconnect();
 });
 
