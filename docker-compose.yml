@@ -6,6 +6,12 @@ services:
     build: .
     restart: always
     container_name: api
+    environment:
+      - CLIENT_SIGNING_KEY
+      - COIN_DETAILS_API_KEY
+      - DATABASE_URI
+      - NODE_ENV
+      - PROFILE_ENCRYPTION_KEY
     expose:
       - 4000
     ports:
