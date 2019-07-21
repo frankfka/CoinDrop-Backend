@@ -1,4 +1,4 @@
-const { profileAlgorithm, profileKey } = require('./configUtil');
+const {profileAlgorithm, profileKey} = require('./configUtil');
 const crypto = require('crypto');
 
 // Creates a random, unencrypted id
@@ -27,18 +27,19 @@ function decryptId(encryptedId) {
     } catch (err) {
         // Decryption failed - Improper input
         console.log(`ID decryption failed: ${err.message}`);
-        let idValidationError = new Error('Encrypted ID not valid. Could not be decrypted')
+        let idValidationError = new Error('Encrypted ID not valid. Could not be decrypted');
         idValidationError.name = 'ValidationError';
         throw idValidationError
     }
 }
 
+// Exports a database model to a json-ready response object
 function formatProfileForResponse(paymentProfile, encryptedProfileId) {
     if (!paymentProfile) {
         return {}
     }
-    let formattedPaymentMethods = paymentProfile.paymentMethods.map(function(paymentMethod) {
-        return { currencyCode: paymentMethod.currencyCode, data: paymentMethod.data }
+    let formattedPaymentMethods = paymentProfile.paymentMethods.map(function (paymentMethod) {
+        return {currencyCode: paymentMethod.currencyCode, data: paymentMethod.data}
     });
     return {
         profileId: encryptedProfileId, // Encrypted - Client should validate this to match sent ID
@@ -56,4 +57,5 @@ module.exports = {
     randomProfileId,
     encryptId,
     decryptId,
-    formatProfileForResponse };
+    formatProfileForResponse
+};
