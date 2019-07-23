@@ -1,13 +1,13 @@
 // Middleware
 const express = require('express');
-const logger = require('morgan');
 const bodyParser = require('body-parser');
 const helmet = require('helmet');
 const rateLimiter = require('express-rate-limit');
 const corsModule = require('cors');
 const {
-  logEnv, port, blockCors, validateClient,
+  port, blockCors, validateClient,
 } = require('./util/configUtil');
+const { reqLogger } = require('./util/logUtil');
 const { errorHandler } = require('./middleware/errorHandler');
 
 // Routes
@@ -42,7 +42,7 @@ app.use(rateLimiter({
   max: 100, // Limit 100 req/window/IP
 }));
 app.use(helmet());
-app.use(logger(logEnv));
+app.use(reqLogger);
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json({ limit: 5000 })); // Limit request size to 5kb
 

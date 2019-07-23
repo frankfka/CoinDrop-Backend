@@ -1,5 +1,6 @@
 const crypto = require('crypto');
 const { profileAlgorithm, profileKey } = require('./configUtil');
+const { logger } = require('../util/logUtil');
 
 // Creates a random, unencrypted id
 function randomProfileId() {
@@ -28,7 +29,7 @@ function decryptId(encryptedId) {
     return Buffer.concat([decrypted, decipher.final()]).toString();
   } catch (err) {
     // Decryption failed - Improper input
-    console.log(`ID decryption failed: ${err.message}`);
+    logger.info(`ID decryption failed: ${err.message}`);
     const idValidationError = new Error('Encrypted ID not valid. Could not be decrypted');
     idValidationError.name = 'ValidationError';
     throw idValidationError;

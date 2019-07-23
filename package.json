@@ -17,13 +17,16 @@
     "debug": "~2.6.9",
     "dotenv": "^8.0.0",
     "express": "~4.16.1",
+    "express-pino-logger": "^4.0.0",
     "express-rate-limit": "^5.0.0",
     "helmet": "^3.18.0",
     "http-errors": "~1.6.3",
     "mongodb": "^3.2.7",
     "mongoose": "^5.6.0",
     "morgan": "~1.9.1",
-    "node-cache": "^4.2.0"
+    "node-cache": "^4.2.0",
+    "pino": "^5.13.0",
+    "pino-pretty": "^3.2.0"
   },
   "devDependencies": {
     "@types/jest": "^24.0.15",

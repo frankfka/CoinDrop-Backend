@@ -5,6 +5,7 @@ const COIN_DETAILS_URL = 'https://min-api.cryptocompare.com/data/coin/generalinf
 
 const axios = require('axios');
 const { coinDetailsApiKey } = require('../util/configUtil');
+const { logger } = require('../util/logUtil');
 
 /**
  * Extracts only what we need from CryptoCompare
@@ -56,12 +57,12 @@ function getCoinDetailsCC(coins) {
           // else, the call errored (even if status is 200)
           resolve(formatResponse(responseObj));
         } else {
-          console.log(`Call to CryptoCompare returned with error: ${responseObj.Message}`);
+          logger.error(`Call to CryptoCompare returned with error: ${responseObj.Message}`);
           reject(Error('Coin details API returned an error'));
         }
       });
     }).catch((err) => {
-      console.log(`Network call to coin details failed: ${JSON.stringify(err)}`);
+      logger.error(`Network call to coin details failed: ${JSON.stringify(err)}`);
       reject(err);
     });
   }));

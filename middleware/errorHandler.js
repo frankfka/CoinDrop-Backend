@@ -1,6 +1,8 @@
+const { logger } = require('../util/logUtil');
+
 // Logs error to console
 const errorLogger = (err, req, res, next) => {
-  console.error(`${err.name}: ${err.message}`);
+  logger.error(`${err.name}: ${err.message}`);
   return next(err);
 };
 

@@ -9,7 +9,7 @@ if (process.env.NODE_ENV !== 'production') {
 
 // Config
 const { NODE_ENV } = process.env;
-const LOG_FORMAT = NODE_ENV !== 'production' ? 'dev' : 'common';
+const LOG_FORMAT = NODE_ENV !== 'production' ? 'dev' : 'prod';
 const BLOCK_CORS = !process.env.NO_CHECK;
 const VALIDATE_CLIENT = !process.env.NO_CHECK;
 const PORT = 4000;
@@ -18,7 +18,7 @@ const PROFILE_ENCRYPTION_ALGORITHM = 'aes256';
 const CLIENT_ENCRYPTION_ALGORITHM = 'sha256';
 
 module.exports = {
-  logEnv: LOG_FORMAT, // For errorLogger
+  logFormat: LOG_FORMAT, // For errorLogger
   port: PORT, // Port to serve
   blockCors: BLOCK_CORS, // Whether to block requests outside of domain
   validateClient: VALIDATE_CLIENT, // Whether to run client validation & signing

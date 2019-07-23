@@ -3,6 +3,7 @@ const coinInfoService = require('../service/coinInfoService');
 const { GetCoinInfoEndpointModel } = require('../model/endpointModel');
 const { validateInput } = require('../util/networkUtil');
 const { asyncRoute } = require('../middleware/asyncRouteWrapper');
+const { logger } = require('../util/logUtil');
 
 const coinInfoRouter = express.Router();
 
@@ -20,7 +21,7 @@ async function getCoinInfo(req, res) {
     coins = input.split(',');
   }
   validateInput(GetCoinInfoEndpointModel, coins);
-  console.log(`Getting coin details for: ${coins.toString()}`);
+  logger.info(`Getting coin details for: ${coins.toString()}`);
   const retrievedInfo = await coinInfoService.getCoinDetails(coins);
   res.json({ rawCoinInfo: retrievedInfo });
 }

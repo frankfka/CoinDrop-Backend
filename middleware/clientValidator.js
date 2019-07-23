@@ -2,6 +2,7 @@
 const crypto = require('crypto');
 const { InputError } = require('../model/error');
 const { clientSigningKey, clientAlgorithm } = require('../util/configUtil');
+const { logger } = require('../util/logUtil');
 
 // Helpers & Constants
 const TIMEOUT = 1000 * 5; // 5 second timeout in ms
@@ -15,7 +16,11 @@ const createSignature = (requestInfo, timestamp) => {
     .update(toEncrypt)
     .digest('hex');
 };
-const checkTimestamp = timestamp => Math.abs(new Date().getTime() - parseInt(timestamp)) <= TIMEOUT;
+const checkTimestamp = (timestamp) => {
+  const currentTime = new Date().getTime();
+  const timeElapsed = Math.abs(currentTime - parseInt(timestamp, 10));
+  return timeElapsed <= TIMEOUT;
+};
 const checkSignatureMatch = (oneSig, otherSig) => {
   try {
     return crypto.timingSafeEqual(
@@ -23,7 +28,7 @@ const checkSignatureMatch = (oneSig, otherSig) => {
       Buffer.from(otherSig, 'utf8'),
     );
   } catch (err) {
-    console.log(`Check signature error: ${err.message}`);
+    logger.error(`Check signature error: ${err.message}`);
     return false;
   }
 };
@@ -53,7 +58,7 @@ const clientValidator = (req, res, next) => {
   if (!checkSignatureMatch(computedSignature, headerSignature)) {
     return next(InputError('Computed signature does not match that given in header'));
   }
-  next();
+  return next();
 };
 
 module.exports = clientValidator;

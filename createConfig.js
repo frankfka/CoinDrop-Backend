@@ -10,6 +10,7 @@ const mongoose = require('mongoose');
 // Setup
 const envFile = require('path').resolve(process.cwd(), environment === 'production' ? '.env.production' : '.env');
 const dotenv = require('dotenv');
+const logger = require('./util/logUtil');
 const { BackendConfig } = require('./model/backendConfigModel');
 
 dotenv.config({ path: envFile });
@@ -60,10 +61,10 @@ async function createConfig() {
  */
 createConfig()
   .then((result) => {
-    console.log(result);
+    logger.info(result);
     process.exit(0);
   })
   .catch((err) => {
-    console.error(err);
+    logger.error(err);
     process.exit(1);
   });
