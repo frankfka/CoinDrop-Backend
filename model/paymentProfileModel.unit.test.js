@@ -4,6 +4,7 @@ const PaymentProfile = require('./paymentProfileModel');
 describe('paymentProfileModel -> Validation Test', () => {
   it('valid payment profile with all fields passes mongoose validation',
     () => {
+      expect.assertions(1);
       const validPaymentProfile = PaymentProfile({
         profileId: 'uniqueprofileid',
         dateCreated: Date(),
@@ -30,6 +31,7 @@ describe('paymentProfileModel -> Validation Test', () => {
   it(
     'valid payment profile with only required fields passes mongoose validation',
     () => {
+      expect.assertions(1);
       const validPaymentProfile = PaymentProfile({
         profileId: 'uniqueprofileid',
         dateCreated: Date(),
@@ -51,6 +53,7 @@ describe('paymentProfileModel -> Validation Test', () => {
 
   it('invalid payment profile with missing ID fails mongoose validation',
     () => {
+      expect.assertions(1);
       const missingIdPaymentProfile = PaymentProfile({
         dateCreated: Date(),
         paymentMethods: [
@@ -70,6 +73,7 @@ describe('paymentProfileModel -> Validation Test', () => {
 
   it('invalid payment profile with empty payment methods fails validation',
     () => {
+      expect.assertions(1);
       const missingIdPaymentProfile = PaymentProfile({
         profileId: 'uniqueprofileid',
         dateCreated: Date(),

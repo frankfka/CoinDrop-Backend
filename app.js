@@ -17,7 +17,7 @@ const routes = {
   coinInfo: '/api/coins',
 };
 
-// Environment based setup
+// CORS Middleware
 const corsWhitelist = ['https://coindrop.me', 'https://www.coindrop.me'];
 const corsOptions = {
   origin(origin, callback) {
@@ -29,20 +29,27 @@ const corsOptions = {
   },
 };
 const cors = blockCors ? corsModule(corsOptions) : corsModule();
+
+// Client Validator
 const clientValidator = validateClient ? require('./middleware/clientValidator') : (req, res, next) => {
   next();
 };
 
+// Create the App to listen on specified port
 const app = express();
 app.set('port', port);
-app.set('trust proxy', 1); // Used with express-rate-limiter
 
+// Express Rate Limiter
+app.set('trust proxy', 1);
 app.use(rateLimiter({
   windowMs: 10 * 60 * 1000, // 10 min
   max: 100, // Limit 100 req/window/IP
 }));
+// Helmet for basic security checks
 app.use(helmet());
+// Request Logging
 app.use(reqLogger);
+// Request body size restriction & parsing
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json({ limit: 5000 })); // Limit request size to 5kb
 
