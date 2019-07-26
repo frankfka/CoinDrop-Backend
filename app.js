@@ -8,7 +8,7 @@ const {
   port, blockCors, validateClient,
 } = require('./util/configUtil');
 const { reqLogger } = require('./util/logUtil');
-const { errorHandler } = require('./middleware/errorHandler');
+const errorHandler = require('./middleware/errorHandler');
 
 // Routes
 const routes = {

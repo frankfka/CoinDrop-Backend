@@ -11,7 +11,8 @@ const inputErrorHandler = (err, req, res, next) => {
   if (err.name === 'ValidationError') {
     // Schema validation failed
     return res.status(400).json({ error: 'Invalid input causing validation error' });
-  } if (err.name === 'InputError') {
+  }
+  if (err.name === 'InputError') {
     // Client validation failed
     return res.status(400).json({ error: 'Client validation failed' });
   }
@@ -25,11 +26,8 @@ const genericErrorHandler = (err, req, res, next) => {
   next(err);
 };
 
-// Master error handler object
-const errorHandler = {
+module.exports = {
   errorLogger,
   input: inputErrorHandler,
   generic: genericErrorHandler,
 };
-
-module.exports = { errorHandler };
