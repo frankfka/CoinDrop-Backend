@@ -1,5 +1,6 @@
 const { input, generic } = require('./errorHandler');
 
+// Mock response object with the required methods
 const mockResponse = () => {
   const res = {
     status: () => {},
